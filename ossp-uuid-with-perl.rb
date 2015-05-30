@@ -1,19 +1,10 @@
-require "formula"
-
-class OsspUuid < Formula
+class OsspUuidWithPerl < Formula
   homepage "http://www.ossp.org/pkg/lib/uuid/"
   url "http://ftp.de.debian.org/debian/pool/main/o/ossp-uuid/ossp-uuid_1.6.2.orig.tar.gz"
   mirror "ftp://ftp.ossp.org/pkg/lib/uuid/uuid-1.6.2.tar.gz"
   sha1 "3e22126f0842073f4ea6a50b1f59dcb9d094719f"
-  revision 1
 
-  bottle do
-    cellar :any
-    sha1 "bc8c6f93dd36442dfc24199062a73d1b4c47701f" => :yosemite
-    sha1 "93c3c44dc456e49bed9cb8b3672144fc348298dc" => :mavericks
-    sha1 "8a922934644663915eedc97f1a7da83725c646d2" => :mountain_lion
-    sha1 "3fbf704b60a660becfba68753285ec70ee47cdeb" => :lion
-  end
+  conflicts_with "ossp-uuid"
 
   option :universal
   option "32-bit"
@@ -27,10 +18,15 @@ class OsspUuid < Formula
 
     system "./configure", "--prefix=#{prefix}",
                           "--includedir=#{include}/ossp",
+                          "--mandir=#{man}",
                           "--without-perl",
                           "--without-php",
                           "--without-pgsql"
     system "make"
-    system "make install"
+    system "make", "install"
+    cd "perl" do
+      system "perl", "Makefile.PL", "INSTALL_BASE=#{prefix}", "CCFLAGS=-D_POSIX_SOURCE", "INSTALLSITEMAN3DIR=#{man3}"
+      system "make", "install"
+    end
   end
 end
