@@ -109,7 +109,7 @@ class Pac < Formula
 
   def install
     ENV.prepend_create_path "PERL5LIB", libexec/"vendor/lib/perl5"
-    ENV.append_path "PERL5LIB", Formula["./ossp-uuid-with-perl.rb"].opt_lib/"perl5/darwin-thread-multi-2level"
+    ENV.append_path "PERL5LIB", Formula["ossp-uuid-with-perl"].opt_lib/"perl5/darwin-thread-multi-2level"
 
     resources.each do |r|
       r.stage do
