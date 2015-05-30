@@ -1,5 +1,3 @@
-require "formula"
-
 class Libproxy < Formula
   homepage "https://code.google.com/p/libproxy/"
   url "https://libproxy.googlecode.com/files/libproxy-0.4.11.tar.gz"
